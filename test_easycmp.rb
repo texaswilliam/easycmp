@@ -3,16 +3,17 @@ require 'test/unit'
 
 class TestEasyCmp < Test::Unit::TestCase
   def setup
-    @klass=Class.new do
-      attr_reader :meth
-      easy_cmp :@foo,:meth
+    @klass=
+      Class.new do
+        attr_reader :meth
+        easy_cmp :@foo,:meth
 
-      def initialize foo=0,bar=0,meth=0
-        @foo=foo
-        @bar=bar
-        @meth=meth
+        def initialize foo=0,bar=0,meth=0
+          @foo=foo
+          @bar=bar
+          @meth=meth
+        end
       end
-    end
   end
 
   def test_standard_case

@@ -55,4 +55,14 @@ class TestEasyCmp < Test::Unit::TestCase
     end
     assert_equal  1, mod_meth<=>@klass.new
   end
+
+  def test_flattening
+    klass=Class.new do easy_cmp [:one,:two],:three end
+    assert_equal [:one,:two,:three], klass.class_variable_get(:@@easycmp_fields)
+  end
+
+  def test_symbol_conversion
+    klass=Class.new do easy_cmp :one,'two',:three end
+    assert_equal [:one,:two,:three], klass.class_variable_get(:@@easycmp_fields)
+  end
 end

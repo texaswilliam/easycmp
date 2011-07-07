@@ -1,23 +1,16 @@
 module EasyCmp
-  class_variable_set(:@@fields,Hash.new([]))
-
-  def fields
-    @@fields
-  end
-  
   module ClassMethods
     def easy_cmp *fields
-      EasyCmp.fields[self]|=fields
-      module_eval %Q{
-        def <=> oth
-          for field in EasyCmp.fields[self.class]
-            call=field.to_s.start_with?(?@) ? :instance_variable_get : :send
-            result=self.send(call,field)<=>oth.send(call,field)
-            return result if result.nonzero?
-          end
-          0
+      @@easycmp_fields||=[]
+      @@easycmp_fields|=fields
+      define_method(:<=>) do |oth|
+        for field in @@easycmp_fields
+          call=field.to_s.start_with?(?@) ? :instance_variable_get : :send
+          result=self.send(call,field)<=>oth.send(call,field)
+          return result if result.nonzero?
         end
-      },__FILE__,__LINE__
+        0
+      end
     end
   end
 end

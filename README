@@ -1,0 +1,16 @@
+This is a small mixin for Object that allows classes to automate setting up the usual ".nonzero? or" chain of comparisons in <=>.
+
+Usage:
+  require 'easycmp'
+  class MyClass
+    easy_cmp :bar,:@foo
+  end
+
+  is equivalent to:
+
+  class MyClass
+    def <=> oth
+      (self.call(:bar)<=>oth.call(:bar)).nonzero? or
+        self.instance_variable_get(:@foo)<=>oth.instance_variable_get(:@foo)
+    end
+  end

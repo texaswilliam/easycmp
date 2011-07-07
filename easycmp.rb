@@ -1,8 +1,9 @@
-require './classattr'
-
 module EasyCmp
-  class_attr_reader :fields
   class_variable_set(:@@fields,Hash.new)
+
+  def fields
+    @@fields
+  end
   
   module ClassMethods
     def easy_cmp *fields

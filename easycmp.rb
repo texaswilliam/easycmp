@@ -1,5 +1,5 @@
 module EasyCmp
-  class_variable_set(:@@fields,Hash.new)
+  class_variable_set(:@@fields,Hash.new([]))
 
   def fields
     @@fields
@@ -7,7 +7,7 @@ module EasyCmp
   
   module ClassMethods
     def easy_cmp *fields
-      EasyCmp.fields[self]=fields
+      EasyCmp.fields[self]|=fields
       module_eval %Q{
         def <=> oth
           for field in EasyCmp.fields[self.class]

@@ -3,9 +3,13 @@ class Module
     return unless fields
     fields=fields.flatten.collect{|field| field.to_sym}
     
-    class_eval '@@easycmp_fields||=[]', __FILE__, __LINE__
-    class_variable_set(:@@easycmp_fields,
-        class_variable_get(:@@easycmp_fields)|fields)
+    #class_eval '@@easycmp_fields||=[]', __FILE__, __LINE__
+    unless class_variable_defined?(:@@easycmp_fields)
+      class_variable_set(:@@easycmp_fields,fields)
+    else
+      class_variable_set(:@@easycmp_fields,
+          class_variable_get(:@@easycmp_fields)|fields)
+    end
     
     define_method(:<=>) do |oth|
       for field in self.class.class_variable_get(:@@easycmp_fields)

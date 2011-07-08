@@ -38,7 +38,7 @@ class TestEasyCmp < Test::Unit::TestCase
   def test_field_append
     @klass.class_eval do easy_cmp :@bar end
     #First, we'll test that :@bar is actually added...
-    assert_equal :@bar, @klass.class_variable_get(:@@easycmp_fields).last
+    assert_equal :@bar, @klass.instance_variable_get(:@easycmp_fields).last
     #We'll run the standards to make sure they still work.
     test_standard_case
     #Now, to test @bar...
@@ -64,12 +64,14 @@ class TestEasyCmp < Test::Unit::TestCase
 
   def test_flattening
     klass=Class.new do easy_cmp [:one,:two],:three end
-    assert_equal [:one,:two,:three], klass.class_variable_get(:@@easycmp_fields)
+    assert_equal [:one,:two,:three],
+        klass.instance_variable_get(:@easycmp_fields)
   end
 
   def test_symbol_conversion
     klass=Class.new do easy_cmp :one,'two',:three end
-    assert_equal [:one,:two,:three], klass.class_variable_get(:@@easycmp_fields)
+    assert_equal [:one,:two,:three],
+        klass.instance_variable_get(:@easycmp_fields)
   end
 
   def test_subclass_differentiation

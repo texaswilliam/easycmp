@@ -71,4 +71,19 @@ class TestEasyCmp < Test::Unit::TestCase
     klass=Class.new do easy_cmp :one,'two',:three end
     assert_equal [:one,:two,:three], klass.class_variable_get(:@@easycmp_fields)
   end
+
+  def test_subclass_differentiation
+    klass=
+      Class.new(@klass) do
+        easy_cmp :@new_var
+        def initialize new_var=0,foo=0,bar=0,meth=0
+          super foo,bar,meth
+          @new_var=new_var
+        end
+      end
+
+    assert_equal  0, klass.new(0,1,1,1)<=>klass.new(0,0,0,0)
+    assert_equal  1, klass.new(1,0,0,0)<=>klass.new(0,1,1,1)
+    assert_equal -1, klass.new(0,1,1,1)<=>klass.new(1,0,0,0)
+  end
 end

@@ -44,6 +44,9 @@ class TestEasyCmp < Test::Unit::TestCase
     #Now, to test @bar...
     assert_equal  1, @klass.new(0,1,0)<=>@klass.new
     assert_equal -1, @klass.new       <=>@klass.new(0,1,0)
+
+    assert_equal  1, @klass.new(1,0,0)<=>@klass.new(0,1,0)
+    assert_equal  1, @klass.new(0,0,1)<=>@klass.new(0,1,0)
   end
 
   #This is to test that when a :sym is given, that obj.sym is called rather than

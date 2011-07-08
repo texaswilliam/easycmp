@@ -37,6 +37,8 @@ class TestEasyCmp < Test::Unit::TestCase
   #Let's add @bar to our comparison chain.
   def test_field_append
     @klass.class_eval do easy_cmp :@bar end
+    #First, we'll test that :@bar is actually added...
+    assert_equal :@bar, @klass.class_variable_get(:@@easycmp_fields).last
     #We'll run the standards to make sure they still work.
     test_standard_case
     #Now, to test @bar...

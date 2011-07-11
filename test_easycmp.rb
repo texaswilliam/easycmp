@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
-require './easycmp'
 require 'test/unit'
+require_relative 'easycmp'
 
 class TestEasyCmp < Test::Unit::TestCase
   def setup

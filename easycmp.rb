@@ -14,6 +14,11 @@ module EasyCmp
 
     return klass
   end
+  def self.clear_fields klass
+    if klass.instance_variable_defined? :@easycmp_fields
+      klass.instance_variable_get(:@easycmp_fields).clear
+    end
+  end
   def self.add_method klass
     klass.class_exec do
       def <=> oth
@@ -35,6 +40,9 @@ module EasyCmp
       opts=fields.last.is_a?(Hash) ? fields.pop : {}
       return if fields.empty?
       EasyCmp.process self, fields.flatten.collect{|field| field.to_sym}, opts
+    end
+    def easy_cmp_clear
+      EasyCmp.clear_fields self
     end
   end
 end

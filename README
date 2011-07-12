@@ -14,3 +14,6 @@ Usage:
         self.instance_variable_get(:@foo)<=>oth.instance_variable_get(:@foo)
     end
   end
+
+Extras:
+easy_cmp_clear will clear previously given fields.

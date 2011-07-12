@@ -78,4 +78,11 @@ class TestEasyCmp < Test::Unit::TestCase
   def test_method_is_private
     assert Object.private_methods.include?(:easy_cmp)
   end
+
+  def test_easy_cmp_clear
+    @klass.class_exec{easy_cmp_clear}
+    assert_equal 0, @klass.new(0,0,1)<=>@klass.new
+    assert_equal 0, @klass.new(0,1,0)<=>@klass.new
+    assert_equal 0, @klass.new(1,0,0)<=>@klass.new
+  end
 end

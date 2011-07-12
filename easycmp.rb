@@ -4,8 +4,8 @@ module EasyCmp
     add_method klass
   end
   def self.add_fields klass, fields
-    unless klass.instance_variable_defined?(:@easycmp_fields)
-      klass.instance_variable_set(:@easycmp_fields,fields)
+    unless klass.instance_variable_defined? :@easycmp_fields
+      klass.instance_variable_set :@easycmp_fields, fields
     else
       #if field exists, merge its old options with the new ones
       klass.instance_variable_get(:@easycmp_fields)

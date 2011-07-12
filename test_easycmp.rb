@@ -88,4 +88,8 @@ class TestEasyCmp < Test::Unit::TestCase
     assert_equal  1, klass.new(1,0,0,0)<=>klass.new(0,1,1,1)
     assert_equal -1, klass.new(0,1,1,1)<=>klass.new(1,0,0,0)
   end
+
+  def test_method_is_private
+    assert Object.private_methods.include?(:easy_cmp)
+  end
 end

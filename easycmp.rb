@@ -30,6 +30,7 @@ module EasyCmp
   end
 
   module ClassMethods
+    private
     def easy_cmp *fields
       EasyCmp.add_fields self, fields
       EasyCmp.add_method self

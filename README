@@ -3,7 +3,9 @@ This is a small mixin for Object that allows classes to automate setting up the 
 Usage:
   require 'easycmp'
   class MyClass
-    easy_cmp :bar,:@foo
+    easy_cmp :bar
+    easy_cmp :@foo
+    #OR easy_cmp :bar,:@foo
   end
 
   is equivalent to:

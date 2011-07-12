@@ -65,7 +65,7 @@ class EasyCmp
     end
     def easy_cmp_clear &blk
       EasyCmp.clear_fields self
-      define_method(:<=>,&blk) if blk and blk.arity==1
+      define_method(:<=>,&blk) if blk
     end
   end
 end

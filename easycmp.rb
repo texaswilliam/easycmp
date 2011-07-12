@@ -17,7 +17,7 @@ module EasyCmp
   def self.add_method klass
     klass.class_exec do
       def <=> oth
-        for field,opts in self.class.instance_variable_get(:@easycmp_fields)
+        for field,opts in self.class.instance_variable_get :@easycmp_fields
           call=field.to_s.start_with?(?@) ? :instance_variable_get : :send
           result=self.send(call,field)<=>oth.send(call,field)
           return result if result.nonzero?

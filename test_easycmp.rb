@@ -108,4 +108,11 @@ class TestEasyCmp < Test::Unit::TestCase
 
     #The case of append not defaulting to true would be caught by other tests.
   end
+
+  def test_reverse
+    @klass.class_exec{easy_cmp :@bar, reverse: true}
+    test_standard_case
+    assert_equal  1, @klass.new       <=>@klass.new(0,1,0)
+    assert_equal -1, @klass.new(0,1,0)<=>@klass.new
+  end
 end

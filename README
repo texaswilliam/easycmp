@@ -25,6 +25,20 @@ Options:
     is equivalent to:
       easy_cmp :@foo,:@baz
 
+  reverse defaults to false. If set to true, the fields define in its easy_cmp call will be compared in reverse.
+    class MyClass
+      easy_cmp :@foo
+      easy_cmp :@bar, reverse: true
+      def initialize foo, bar
+        @foo=foo
+        @bar=bar
+      end
+    end
+    MyClass.new(1,0)<=>MyClass.new(0,0)
+    => 1
+    MyClass.new(0,1)<=>MyClass.new(0,0)
+    => -1
+    
 Extras:
 easy_cmp_clear will clear previously given fields. It can also be given a block to redefine <=> with.
 

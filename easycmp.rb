@@ -4,6 +4,8 @@ module EasyCmp
       case key
       when :append
         true
+      when :reverse
+        false
       else
         nil
       end
@@ -36,7 +38,11 @@ module EasyCmp
       def <=> oth
         for field,opts in self.class.instance_variable_get :@easycmp_fields
           call=field.to_s.start_with?(?@) ? :instance_variable_get : :send
-          result=self.send(call,field)<=>oth.send(call,field)
+          unless opts[:reverse]
+            result=self.send(call,field)<=>oth.send(call,field)
+          else
+            result=oth.send(call,field)<=>self.send(call,field)
+          end
           return result if result.nonzero?
         end
         return 0

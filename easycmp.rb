@@ -1,4 +1,8 @@
-module EasyCmp
+require 'singleton'
+
+class EasyCmp
+  include Singleton
+
   @opts_default_proc=
     proc do |hash,key|
       case key

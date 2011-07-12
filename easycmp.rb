@@ -41,8 +41,9 @@ module EasyCmp
       return if fields.empty?
       EasyCmp.process self, fields.flatten.collect{|field| field.to_sym}, opts
     end
-    def easy_cmp_clear
+    def easy_cmp_clear &blk
       EasyCmp.clear_fields self
+      define_method(:<=>,&blk) if blk and blk.arity==1
     end
   end
 end

@@ -18,4 +18,4 @@ Usage:
   end
 
 Extras:
-easy_cmp_clear will clear previously given fields.
+easy_cmp_clear will clear previously given fields. It can also be given a block to redefine <=> with.

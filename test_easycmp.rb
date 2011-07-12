@@ -85,4 +85,11 @@ class TestEasyCmp < Test::Unit::TestCase
     assert_equal 0, @klass.new(0,1,0)<=>@klass.new
     assert_equal 0, @klass.new(1,0,0)<=>@klass.new
   end
+
+  def test_easy_cmp_clear_with_block
+    @klass.class_exec{easy_cmp_clear{|oth| [self,oth]}}
+    one=@klass.new
+    two=@klass.new
+    assert_equal [one,two], one<=>two
+  end
 end

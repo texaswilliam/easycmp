@@ -36,7 +36,7 @@ class TestEasyCmp < Test::Unit::TestCase
   
   #Let's add @bar to our comparison chain.
   def test_field_append
-    @klass.class_eval do easy_cmp :@bar end
+    @klass.class_exec{easy_cmp :@bar}
     #We'll run the standards to make sure they still work.
     test_standard_case
     #Now, to test @bar...

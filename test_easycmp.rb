@@ -92,4 +92,20 @@ class TestEasyCmp < Test::Unit::TestCase
     two=@klass.new
     assert_equal [one,two], one<=>two
   end
+  
+  def test_append
+    @klass.class_exec{easy_cmp :@foo, append: false}
+    assert_equal  1, @klass.new(1,0,0)<=>@klass.new
+    assert_equal -1, @klass.new       <=>@klass.new(1,0,0)
+    assert_equal  0, @klass.new(0,0,1)<=>@klass.new
+    assert_equal  0, @klass.new(0,1,0)<=>@klass.new
+
+    #This brings us back to the original set of @foo and meth, so we can use the
+    #original two tests to check that append:true is honored.
+    @klass.class_exec{easy_cmp :meth, append: true}
+    test_standard_case
+    test_no_extras
+
+    #The case of append not defaulting to true would be caught by other tests.
+  end
 end

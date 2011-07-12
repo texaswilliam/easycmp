@@ -1,5 +1,17 @@
 module EasyCmp
+  @opts_default_proc=
+    proc do |hash,key|
+      case key
+      when :append
+        true
+      else
+        nil
+      end
+    end
+
   def self.process klass, fields, opts={}
+    opts.default_proc=@opts_default_proc
+    clear_fields klass unless opts[:append]
     add_fields klass, Hash[fields.collect{|field| [field,opts.clone]}]
     add_method klass
   end

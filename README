@@ -17,6 +17,14 @@ Usage:
     end
   end
 
+Options:
+  append defaults to true. If set to false, all fields will be cleared before adding the given fields.
+      easy_cmp :bar
+      easy_cmp :@foo, append: false
+      easy_cmp :@baz
+    is equivalent to:
+      easy_cmp :@foo,:@baz
+
 Extras:
 easy_cmp_clear will clear previously given fields. It can also be given a block to redefine <=> with.
 

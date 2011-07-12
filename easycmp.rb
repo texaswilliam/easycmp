@@ -5,14 +5,13 @@ module EasyCmp
     fields.flatten!
     fields.collect!{|field| field.to_sym}
 
-    klass.class_exec fields do |fields|
-      unless instance_variable_defined?(:@easycmp_fields)
-        instance_variable_set(:@easycmp_fields,fields)
-      else
-        instance_variable_set(:@easycmp_fields,
-            instance_variable_get(:@easycmp_fields)|fields)
-      end
+    unless klass.instance_variable_defined?(:@easycmp_fields)
+      klass.instance_variable_set(:@easycmp_fields,fields)
+    else
+      klass.instance_variable_set(:@easycmp_fields,
+          klass.instance_variable_get(:@easycmp_fields)|fields)
     end
+
     return klass
   end
   def self.add_method klass

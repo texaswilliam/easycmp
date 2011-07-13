@@ -22,6 +22,9 @@ class TestEasyCmp < Test::Unit::TestCase
     assert_equal  0, @klass.new       <=>@klass.new
     #If the right-hand operand has our second var larger, we should get -1.
     assert_equal -1, @klass.new       <=>@klass.new(0,0,1)
+  end
+
+  def test_order
     #If the left-hand one has our first var larger, though, we get 1 regardless
     #of what the right-hand operand has for the second var.
     assert_equal  1, @klass.new(1,0,0)<=>@klass.new(0,0,1)
@@ -39,6 +42,7 @@ class TestEasyCmp < Test::Unit::TestCase
     @klass.class_exec{easy_cmp :@bar}
     #We'll run the standards to make sure they still work.
     test_standard_case
+    test_order
     #Now, to test @bar...
     assert_equal  1, @klass.new(0,1,0)<=>@klass.new
     assert_equal -1, @klass.new       <=>@klass.new(0,1,0)
@@ -104,6 +108,7 @@ class TestEasyCmp < Test::Unit::TestCase
     #original two tests to check that append:true is honored.
     @klass.class_exec{easy_cmp :meth, append: true}
     test_standard_case
+    test_order
     test_no_extras
 
     #The case of append not defaulting to true would be caught by other tests.
@@ -112,7 +117,14 @@ class TestEasyCmp < Test::Unit::TestCase
   def test_reverse
     @klass.class_exec{easy_cmp :@bar, reverse: true}
     test_standard_case
+    test_order
     assert_equal  1, @klass.new       <=>@klass.new(0,1,0)
     assert_equal -1, @klass.new(0,1,0)<=>@klass.new
+  end
+
+  def test_reorder
+    @klass.class_exec{easy_cmp :@foo}
+    test_standard_case
+    assert_equal 1, @klass.new(0,0,1)<=>@klass.new(1,0,0)
   end
 end

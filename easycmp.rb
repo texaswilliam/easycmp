@@ -18,7 +18,7 @@ class EasyCmp
   def self.process klass, fields, opts={}
     opts.default_proc=@opts_default_proc
     clear_fields klass unless opts[:append]
-    add_fields klass, Hash[fields.collect{|field| [field,opts.clone]}]
+    add_fields klass, fields.collect{|field| [field,opts.clone]}
     add_method klass
   end
   def self.add_fields klass, fields
@@ -26,8 +26,8 @@ class EasyCmp
       klass.instance_variable_set :@easycmp_fields, fields
     else
       #if field exists, merge its old options with the new ones
-      klass.instance_variable_get(:@easycmp_fields)
-          .merge!(fields) {|key,old,new| old.merge(new)}
+      klass.instance_variable_set :@easycmp_fields,
+          merge_fields(klass.instance_variable_get(:@easycmp_fields), fields)
     end
 
     return klass
@@ -53,6 +53,29 @@ class EasyCmp
       end
     end
     return klass
+  end
+
+  private
+  def self.merge_fields a, b
+    to_r=[]
+    key_overlap=[]
+
+    a.each do |el| field,opts=*el
+      if b.assoc field
+        key_overlap << field
+      else
+        to_r << el
+      end
+    end
+    b.each do |el| field,opts=*el
+      if key_overlap.include? field
+        to_r << [field,a.assoc(field)[1].merge(opts)]
+      else
+        to_r << el
+      end
+    end
+
+    return to_r
   end
 
   module ClassMethods

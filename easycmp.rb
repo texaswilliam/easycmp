@@ -4,7 +4,7 @@ class EasyCmp
   include Singleton
 
   @opts_default_proc=
-    proc do |hash,key|
+    proc do |_,key|
       case key
       when :append
         true
